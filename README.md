@@ -1,17 +1,37 @@
-#Torch-Lenia: GPU-Accelerated Artificial Life 
-מנוע סימולציה של אוטומטים תאיים רציפים (Continuous Cellular Automata) שמדמה התפתחות של יצורים וירטואליים. 
-הפרויקט נכתב במקור ב-NumPy, אך שוכתב לחלוטין ל-PyTorch כדי לרוץ על כרטיס המסך (GPU) ולאפשר חישובים של מיליוני פיקסלים בזמן אמת
+# 🧬 Torch-Lenia: GPU-Accelerated Artificial Life
+
+A high-performance simulation of Continuous Cellular Automata (inspired by the OpenLenia framework). 
+This project models the evolution of virtual, multi-channel (RGB) organisms by calculating complex spatial interactions in real-time.
+
+> **Engineering Note:** Originally built with NumPy on the CPU, the engine was completely rewritten using **PyTorch**. This leveraged GPU acceleration (CUDA) and tensor mathematics, allowing the simulation of millions of pixels at 60 FPS.
 
 ![20260303-1621-54 1118620](https://github.com/user-attachments/assets/f4a47e67-a0eb-4afe-837c-1863a19d871a)
 
-*Multi-Channel Interaction: תמיכה ב-3 ערוצי צבע (RGB) עם אינטראקציה צולבת (Cross-channel) באמצעות כפל מטריצות.
+## ✨ Key Features
 
-*GPU Acceleration: שימוש ב-PyTorch ו-CUDA כדי להעביר את עומס החישוב מה-CPU לכרטיס המסך, מה שמאפשר הרצה של 60 פריימים בשנייה על עולם של 800x800.
+* **Multi-Channel Interaction:** Supports 3 color channels (RGB) with cross-channel interactions using advanced matrix multiplication (`torch.tensordot`).
+* **GPU Acceleration:** Shifts heavy computations from the CPU to the GPU (VRAM) using PyTorch, enabling massive grid sizes (e.g., 800x800) without frame drops.
+* **Fast Fourier Transform (FFT):** Utilizes `torch.fft.fft2` to calculate environmental convolutions and organism growth efficiently, replacing traditional nested loops.
+* **Custom Biology (DNA):** Configurable parameters (growth rates, interaction weights, radii) to discover new macroscopic cellular behaviors and "gliders".
 
-*Fast Fourier Transform (FFT): שימוש ב- torch.fft כדי לחשב את הקונבולוציות וההשפעה הסביבתית של כל תא בצורה יעילה במקום לולאות איטיות.
+## 🚀 How to Run
 
-איזה ספריות צריך להתקין: pip install torch torchvision pygame numpy
+1. **Install Dependencies:**
+   Make sure you have a Python environment set up, then run the following in your terminal:
+   
+   `pip install torch torchvision pygame numpy`
 
-הפקודה להרצה: python main.py
+2. **Run the Simulation:**
+   
+   `python main.py`
 
-הסבר קצר על הממשק: "קליק שמאלי של העכבר מצייר 'חומר ביולוגי' על המסך, ונותן לסימולציה לרוץ".
+3. **Controls:**
+   * **Left Click:** Inject biological matter into the ecosystem.
+   * *Tip:* Click once in the center and watch the cells interact, form membranes, and evolve!
+
+## 🧠 The Architecture & Challenges
+
+Migrating this engine to PyTorch required solving several architectural challenges:
+* **Tensor Broadcasting & Permutation:** Handling dimensional differences between PyTorch tensors `(Channels, Height, Width)` and Pygame's expected screen format `(Width, Height, Channels)` using `.permute()`.
+* **Memory Bottlenecks:** Synchronizing GPU data with CPU-bound rendering safely via `.cpu().numpy()`.
+* **Data Types:** Forcing strict type matching (`float32` vs `float64`) during FFT operations and weight dot-products.
