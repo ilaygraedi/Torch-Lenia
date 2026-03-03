@@ -29,7 +29,7 @@ class Lenia:
         cor_x, cor_y = torch.meshgrid(x,y,indexing="xy")
         distance = cor_x**2 + cor_y**2
         kernel = ((distance > self.inner_radius**2) & (distance < self.outer_radius**2)).float()
-        return kernel
+        return kernel/kernel.sum(dim = (1,2), keepdim = True)#הפעמון מקבל מספרים בין 1 ל0 אז אחרי הקונבולוציה  המספר המקסימלי בתא 1
     
     #---חישוב ערך גדילה---
     def calculate_growth(self,mat):#top = mean, felx =standart deviation
