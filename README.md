@@ -5,7 +5,7 @@ This project models the evolution of virtual, multi-channel (RGB) organisms by c
 
 > **Engineering Note:** Originally built with NumPy on the CPU, the engine was completely rewritten using **PyTorch**. This leveraged GPU acceleration (CUDA) and tensor mathematics, allowing the simulation of millions of pixels at 60 FPS.
 
-![20260303-1621-54 1118620](https://github.com/user-attachments/assets/f4a47e67-a0eb-4afe-837c-1863a19d871a)
+![20260303-1621-39 6991350-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/28dd0ddf-43f4-4c21-8345-c16811c56758)
 
 ## ✨ Key Features
 
