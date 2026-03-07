@@ -1,37 +1,46 @@
-# 🧬 Torch-Lenia: GPU-Accelerated Artificial Life
+# Torch-Lenia: Continuous Cellular Automata Engine
 
-A high-performance simulation of Continuous Cellular Automata (inspired by the OpenLenia framework). 
-This project models the evolution of virtual, multi-channel (RGB) organisms by calculating complex spatial interactions in real-time.
+A high-performance, GPU-accelerated implementation of **Lenia** (Continuous Cellular Automata) built entirely from scratch using PyTorch and Python. 
 
-> **Engineering Note:** Originally built with NumPy on the CPU, the engine was completely rewritten using **PyTorch**. This leveraged GPU acceleration (CUDA) and tensor mathematics, allowing the simulation of millions of pixels at 60 FPS.
+This project explores artificial life, complex systems, and self-organizing patterns by simulating a continuous universe where cell states, space, and time are fluid rather than discrete.
 
-![20260303-1621-39 6991350-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/28dd0ddf-43f4-4c21-8345-c16811c56758)
+## 🌌 Visual Showcase: The Primordial Soup
+The current `main.py` is configured to run a **3-channel (RGB) Primordial Soup**. 
+By injecting absolute random noise into a multi-channel environment with specific cross-channel attraction and repulsion weights, the system spontaneously self-organizes into complex, life-like, moving structures.
+
+*(Tip: Add a screenshot or a GIF of your running simulation here!)*
 
 ## ✨ Key Features
+* **GPU-Accelerated Physics:** Utilizes PyTorch's Fast Fourier Transform (`torch.fft.fft2`) for lightning-fast convolution operations over the entire grid.
+* **Multi-Channel (RGB) Support:** Fully supports N-dimensional universes. The current configuration uses 3 interacting channels with a complex weight matrix.
+* **Data-Driven Architecture:** Complete decoupling of the physics engine from the organism data. The simulation rules are injected dynamically via a `settings` dictionary.
+* **Mathematical Noise Reduction:** Implements an elegant floating-point error thresholding mechanism (`1e-4`) to prevent FFT mathematical noise from accumulating.
+* **Real-Time Rendering:** Uses `Pygame` to render the complex tensor states directly to the screen at a smooth 60 FPS.
 
-* **Multi-Channel Interaction:** Supports 3 color channels (RGB) with cross-channel interactions using advanced matrix multiplication (`torch.tensordot`).
-* **GPU Acceleration:** Shifts heavy computations from the CPU to the GPU (VRAM) using PyTorch, enabling massive grid sizes (e.g., 800x800) without frame drops.
-* **Fast Fourier Transform (FFT):** Utilizes `torch.fft.fft2` to calculate environmental convolutions and organism growth efficiently, replacing traditional nested loops.
-* **Custom Biology (DNA):** Configurable parameters (growth rates, interaction weights, radii) to discover new macroscopic cellular behaviors and "gliders".
+## 🛠️ Tech Stack
+* **PyTorch:** Core engine, tensor operations, FFT convolutions, and GPU (`cuda`) compatibility.
+* **NumPy:** Mathematical arrays and structural data definitions.
+* **Pygame:** Real-time visual rendering and window management.
 
 ## 🚀 How to Run
 
-1. **Install Dependencies:**
-   Make sure you have a Python environment set up, then run the following in your terminal:
-   
-   `pip install torch torchvision pygame numpy`
+1. Clone this repository:
+    git clone https://github.com/ilaygraedi/Torch-Lenia.git
+    cd Torch-Lenia
 
-2. **Run the Simulation:**
-   
-   `python main.py`
+2. Install the required dependencies:
+    pip install torch numpy pygame
 
-3. **Controls:**
-   * **Left Click:** Inject biological matter into the ecosystem.
-   * *Tip:* Click once in the center and watch the cells interact, form membranes, and evolve!
+3. Run the simulation:
+    python main.py
 
-## 🧠 The Architecture & Challenges
+## 🧠 Project Architecture
+* `engine.py`: The core physics engine. Contains the `Lenia` class which handles the creation of the kernels, the growth functions, and the update logic.
+* `main.py`: The entry point and configuration hub. It defines the DNA (the `settings` dictionary) of the universe and runs the main loop.
 
-Migrating this engine to PyTorch required solving several architectural challenges:
-* **Tensor Broadcasting & Permutation:** Handling dimensional differences between PyTorch tensors `(Channels, Height, Width)` and Pygame's expected screen format `(Width, Height, Channels)` using `.permute()`.
-* **Memory Bottlenecks:** Synchronizing GPU data with CPU-bound rendering safely via `.cpu().numpy()`.
-* **Data Types:** Forcing strict type matching (`float32` vs `float64`) during FFT operations and weight dot-products.
+## 🔮 Future Implementations
+* Support for multi-kernel layers per channel (to allow for hyper-complex creatures).
+* Integration of Genetic Algorithms to automate the discovery of new stable creatures and behaviors.
+
+---
+*Created as an exploration into software architecture, continuous mathematics, and artificial life.*
