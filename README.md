@@ -8,7 +8,11 @@ This project explores artificial life, complex systems, and self-organizing patt
 The current `main.py` is configured to run a **3-channel (RGB) Primordial Soup**. 
 By injecting absolute random noise into a multi-channel environment with specific cross-channel attraction and repulsion weights, the system spontaneously self-organizes into complex, life-like, moving structures.
 
-*(Tip: Add a screenshot or a GIF of your running simulation here!)*
+
+
+https://github.com/user-attachments/assets/94068579-c876-46d9-b541-f6ccd9dd64ec
+
+
 
 ## ✨ Key Features
 * **GPU-Accelerated Physics:** Utilizes PyTorch's Fast Fourier Transform (`torch.fft.fft2`) for lightning-fast convolution operations over the entire grid.
